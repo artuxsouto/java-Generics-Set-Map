@@ -5,14 +5,17 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import mode.entities.CalculationService;
+import mode.entities.Product;
 
 public class Program {
 
 	public static void main(String[] args) {
 		
-		List<Integer> list = new ArrayList<>();
+		List<Product> list = new ArrayList<>();
+		Locale.setDefault(Locale.US);
 
 		String path = "D:\\out\\in.txt";
 
@@ -20,12 +23,14 @@ public class Program {
 			
 			String line = br.readLine();
 			while (line != null) {
-				list.add(Integer.parseInt(line));
+				String[] fields = line.split(",");
+				list.add(new Product(fields[0], Double.parseDouble(fields[1])));
 				line = br.readLine();
 			}
 			
-			Integer x = CalculationService.max(list);
-			System.out.print("Max: " + x);
+			Product x = CalculationService.max(list);
+			System.out.println("Most expensive:");
+			System.out.println(x);
 
 		} catch (IOException e) {
 			System.out.println("Error: " + e.getMessage());
