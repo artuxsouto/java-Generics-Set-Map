@@ -1,29 +1,38 @@
 package application;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
+import java.util.Scanner;
+
+import entities.Circle;
+import entities.Rectangle;
+import entities.Shape;
 
 public class Program {
 
 	public static void main(String[] args) {
-
-		List<Object> myObjs = new ArrayList<Object>();
-		List<Integer> myNumbers = new ArrayList<Integer>();
-		myObjs = myNumbers; // erro de compilação
-
-		List<?> myObjs1 = new ArrayList<Object>();
-		List<Integer> myNumbers1 = new ArrayList<Integer>();
-		myObjs1 = myNumbers1;
-
-		List<Integer> myInts = Arrays.asList(5, 2, 10);
-		printList(myInts);
+		
+		Locale.setDefault(Locale.US);
+		Scanner sc = new Scanner(System.in);
+		
+		List<Shape> myShapes = new ArrayList<>();
+		myShapes.add(new Rectangle(3.0, 2.0));
+		myShapes.add(new Circle(2.0));
+		
+		List<Circle> myCircles = new ArrayList<>();
+		myCircles.add(new Circle(2.0));
+		myCircles.add(new Circle(3.0));
+		
+		System.out.println("Total area: " + totalArea(myCircles));
+		sc.close();
 	}
-
-	public static void printList(List<?> list) {
-		list.add(3); // erro de compilação
-		for (Object obj : list) {
-			System.out.println(obj);
+	
+	public static double totalArea(List<? extends Shape> list) {
+		double sum = 0.0;
+		for (Shape s : list) {
+			sum += s.area();
 		}
+		return sum;
 	}
 }
