@@ -1,26 +1,51 @@
 package application;
 
-import java.util.HashMap;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.LinkedHashMap;
 import java.util.Map;
-
-import Entities.Product;
+import java.util.Scanner;
 
 public class Program {
 	
 	public static void main(String[] args) {
 		
-		Map<Product, Double> stock = new HashMap<>();
+		Scanner sc = new Scanner(System.in);
 		
-		Product p1 = new Product("Tv", 900.0);
-		Product p2 = new Product("Notebook", 1200.0);
-		Product p3 = new Product("Tablet", 400.0);
+		System.out.print("Enter file full path: ");
+		String path = sc.nextLine();
 		
-		stock.put(p1, 10000.0);
-		stock.put(p2, 20000.0);
-		stock.put(p3, 15000.0);
+		try (BufferedReader br = new BufferedReader(new FileReader(path))){
+			String line = br.readLine();
+			
+			Map<String, Integer> votos = new LinkedHashMap<>();
+			
+			while (line != null) {
+				String[] fields = line.split(",");
+				String name = fields[0];
+				int count = Integer.parseInt(fields[1]);
+				
+				if (votos.containsKey(name)) {
+					int votesSoFar = votos.get(name);
+					votos.put(name, count + votesSoFar);
+				}
+				else {
+					votos.put(name, count);
+				}
+				
+				line = br.readLine();
+			}
+			
+			for (String key : votos.keySet()) {
+				System.out.println(key + ": " + votos.get(key));
+			}
+			
+		}
+		catch (IOException e) {
+			System.out.println("Error: " + e.getMessage());
+		}
 		
-		Product ps = new Product("Tv", 900.0);
-		
-		System.out.println("Contains 'ps' key: " + stock.containsKey(ps));
+		sc.close();
 	}
 }
