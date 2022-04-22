@@ -1,47 +1,30 @@
 package application;
 
-import java.util.HashSet;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class Program {
 
 	public static void main(String[] args) {
-
-		Scanner sc = new Scanner(System.in);
-		Set<Integer> a = new HashSet<>();
-		Set<Integer> b = new HashSet<>();
-		Set<Integer> c = new HashSet<>();
 		
-		System.out.print("How many students for course A? ");
-		int n = sc.nextInt();
-		for (int i = 1; i <= n; i++) {
-			int code = sc.nextInt();
-			a.add(code);
-		}
-
-		System.out.print("How many students for course B? ");
-		n = sc.nextInt();
+		Map<String, String> cookies = new TreeMap<>();
 		
-		for (int i = 1; i <= n; i++) {
-			int code = sc.nextInt();
-			b.add(code);
-		}
+		cookies.put("username", "Maria");
+		cookies.put("email", "maria@gmail.com");
+		cookies.put("phone", "99711122");
 		
-		System.out.print("How many students for course C? ");
-		n = sc.nextInt();
+		cookies.remove("email");
+		cookies.put("phone", "99771133");
 		
-		for (int i = 1; i <= n; i++) {
-			int code = sc.nextInt();
-			c.add(code);
+		System.out.println("Contains 'phone' key: " + cookies.containsKey("phone"));
+		System.out.println("Phone number: " + cookies.get("phone"));
+		System.out.println("Email: " + cookies.get("email")); // Retorna null pois anteriormente foi usado um método para remover.
+		System.out.println("Size: " + cookies.size());
+		
+		System.out.println("ALL COOKIES:");
+		for (String key : cookies.keySet()) {
+			System.out.println(key + ": " + cookies.get(key));
 		}
 		
-		Set<Integer> total = new HashSet<>(a);
-		total.addAll(b);
-		total.addAll(c);
-		
-		System.out.println("Total students: " + total.size());
-		
-		sc.close();
 	}
 }
